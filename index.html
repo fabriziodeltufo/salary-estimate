@@ -1,0 +1,142 @@
+<!-- salary estimate -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>STIMA RETRIBUZIONE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<h2 style="text-decoration: underline;">PARAMETRI RETRIBUZIONE</h2>
+
+<div style="border: 1px solid black ; padding: 20px;">
+  <table>
+    <tr>Titolo di Studio</tr>
+    <tr>
+      <td><input type="radio" id="titolo" name="titolo" value="NO" checked="checked" >NO</td>
+      <td><input type="radio" id="titolo" name="titolo" value="diploma">Diploma (+100eu)</td>
+      <td><input type="radio" id="titolo" name="titolo" value="laurea">Laurea (+300eu)</td>
+    </tr>
+  </table>
+
+  <br>
+
+  <table>
+    <tr>Esperienza Lavorativa</tr>
+    <tr>
+      <td><input type="radio" id="esperienza" name="esperienza" value="NO" checked="checked" >NO</td>
+      <td><input type="radio" id="esperienza" name="esperienza" value="minore">Meno di 5 anni (+200eu)</td>
+      <td><input type="radio" id="esperienza" name="esperienza" value="maggiore">Piu di 5 anni (+400eu)</td>
+    </tr>
+  </table>
+
+  <br>
+
+  <table>
+    <tr>Linguaggio + conosciuto</tr>
+    <tr>
+      <td><input type="checkbox" id="PHP" name="PHP" value="OK" >PHP (+250eu)</td>
+      <td><input type="checkbox" id="C" name="C" value="OK" >C (+100eu)</td>
+      <td><input type="checkbox" id="C++" name="C++" value="OK" >C++ (+200eu)</td>
+      <td><input type="checkbox" id="Java" name="Java" value="OK" >Java (+150eu)</td>
+      <td><input type="checkbox" id="Javascript" name="Javascript" value="OK" >Javascript (+300eu)</td>
+    </tr>
+  </table>
+
+</div>
+
+<br>
+<input type="button" id="btn_ok" name="btn_ok" value="CALCOLA STIMA">
+
+<hr>
+
+<table>
+  <h2 style="text-decoration: underline;">STIMA RETRIBUZIONE (EURO)</h2>
+  <tr>
+    <td>Stipendio Base</td>
+    <td>Bonus Titolo</td>
+    <td>Bonus Esperienza </td>
+    <td>Bonus Linguaggio</td>
+  </tr>
+
+  <tr>
+    <td><input type="text" id="stipendioBase"></td>
+    <td><input type="text" id="bonusTitolo"></td>
+    <td><input type="text" id="bonusEsperienza"></td>
+    <td><input type="text" id="bonusLinguaggio"></td>
+  </tr>
+</table>
+  
+<hr>
+<td>Totale</td><br>
+<td><input type="text" id="totale"></td>
+
+<!-- libreria jquery -->
+<script type="text/javascript" src="jquery-3.5.1.min.js"></script>
+
+
+<!-- script x il calcolo stima retribuzione -->
+<script type="text/javascript">
+
+$("#btn_ok").click(salary);
+
+
+function salary()
+{
+
+    // valore stipendio base
+    var stipendioBase = 1200;
+    $("#stipendioBase").val(stipendioBase);
+
+
+    // calcolo bonus x titolo di studio : diploma / laurea
+    var titolo = $("[name='titolo']:checked").val();
+    var bonusTitolo = 0;
+    if (titolo != "NO") {
+    bonusTitolo = bonusTitolo + (titolo === 'diploma' ? 100 : 300);
+    }
+    $("#bonusTitolo").val(bonusTitolo);
+
+
+    // calcolo bonus x esperienza : (minore / maggiore) di 5 anni
+    var esperienza = $("[name='esperienza']:checked").val();
+    var bonusEsperienza = 0;
+    if (esperienza != "NO") {
+    bonusEsperienza = bonusEsperienza + (esperienza === 'minore' ? 200 : 400);
+    }
+    $("#bonusEsperienza").val(bonusEsperienza);
+
+
+    // calcolo bonus x linguaggio conosciuto
+    var linguaggioPhp = $("[name='PHP']:checked").val();
+    var linguaggioC = $("[name='C']:checked").val();
+    var linguaggioCCC = $("[name='C++']:checked").val();
+    var linguaggioJava = $("[name='Java']:checked").val();
+    var linguaggioJavascript = $("[name='Javascript']:checked").val();
+
+    var bonusLinguaggio = 0 ;
+
+    if (linguaggioPhp === "OK") { bonusLinguaggio +=250;} 
+    if (linguaggioC === "OK") { bonusLinguaggio +=100;}
+    if (linguaggioCCC === "OK") { bonusLinguaggio +=200;}
+    if (linguaggioJava === "OK") { bonusLinguaggio +=150;}
+    if (linguaggioJavascript === "OK") { bonusLinguaggio +=300;}
+
+
+    $("#bonusLinguaggio").val(bonusLinguaggio);
+
+    var totale = stipendioBase + bonusTitolo + bonusEsperienza + bonusLinguaggio ;
+    $("#totale").val(totale);
+
+
+} // end function salary
+
+</script>
+
+
+</body>
+
+</html>
